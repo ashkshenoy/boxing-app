@@ -210,7 +210,7 @@ export default function BoxingApp() {
       setRestActive(true);
       setRestLeft(REST_DURATION);
       // speak rest once when rest starts (we also speak in rest effect to be safe)
-      speak(`Rest ${REST_DURATION} seconds`);
+     // speak(`Rest ${REST_DURATION} seconds`);
       return;
     }
 
