@@ -165,9 +165,7 @@ export default function BoxingApp() {
     const t = setTimeout(() => {
       if (preCountdown === 1) {
         // small punch beep during "GO"
-        setTimeout(() => {
-          playSound("/punch.mp3");
-        }, 1000);
+        
 
         setPreCountdown(0);
 
