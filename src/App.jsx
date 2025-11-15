@@ -29,6 +29,42 @@ const MOVE_COLORS = {
   Block: "text-teal-300",
 };
 
+const MOVE_DESCRIPTIONS = {
+  "Jab": "Quick lead-hand punch.",
+  "Cross": "Rear-hand straight power punch.",
+  "Hook L": "Lead-hand curved punch from the side.",
+  "Hook R": "Rear-hand curved punch from the side.",
+  "Uppercut L": "Lead-hand rising punch from underneath.",
+  "Uppercut R": "Rear-hand rising punch from underneath.",
+  "Slip L": "Move head left to avoid punches.",
+  "Slip R": "Move head right to avoid punches.",
+  "Step Back": "Create space by stepping back quickly.",
+  "Block": "Use gloves to absorb incoming punches."
+};
+
+const INTENSITY_PRESETS = {
+  light: {
+    moveCount: 1,
+    roundDuration: 30,
+    sessionRounds: 2
+  },
+  moderate: {
+    moveCount: 2,
+    roundDuration: 60,
+    sessionRounds: 3
+  },
+  hard: {
+    moveCount: 3,
+    roundDuration: 90,
+    sessionRounds: 4
+  },
+  beast: {  
+    moveCount: 4,
+    roundDuration: 120,
+    sessionRounds: 5
+  }
+};
+
 export default function BoxingApp() {
   const [roundActive, setRoundActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
@@ -56,6 +92,8 @@ export default function BoxingApp() {
   const [voiceOn, setVoiceOn] = useState(null);
   const [voiceGender, setVoiceGender] = useState("female"); // "female" | "male"
   const [voiceVolume, setVoiceVolume] = useState(1);        // 0–1
+  const [intensity, setIntensity] = useState(null);
+  const intensityLocked = intensity !== null;
 
   // Ensure voices are loaded (some browsers load asynchronously)
   useEffect(() => {
@@ -219,6 +257,14 @@ export default function BoxingApp() {
 
   }, [roundActive, timeLeft, currentRound, sessionRounds]);
 
+  const applyIntensity = (level) => {
+  setIntensity(level);
+  const preset = INTENSITY_PRESETS[level];
+
+  setMoveCount(preset.moveCount);
+  setRoundDuration(preset.roundDuration);
+  setSessionRounds(preset.sessionRounds);
+  };
   // REST timer — speak only once when rest begins
   useEffect(() => {
     if (!restActive) return;
@@ -296,10 +342,17 @@ export default function BoxingApp() {
                     x: [0, -2, 2, -1, 1, 0], // subtle shake
                   }}
                   transition={{ duration: 0.4 }}
-                  className={`bg-black/40 px-4 py-2 rounded-xl text-xl md:text-2xl font-semibold whitespace-normal text-center shadow-lg 
+                  className={`bg-black/40 px-4 py-3 rounded-xl text-center shadow-lg 
                               ${MOVE_COLORS[m]}`}
                 >
-                  🥊 {m}
+                  <div className="text-xl md:text-2xl font-semibold">
+                    🥊 {m}
+                  </div>
+
+                  {/* Small description */}
+                  <div className="text-sm md:text-base opacity-80 mt-1">
+                    {MOVE_DESCRIPTIONS[m]}
+                  </div>
                 </motion.div>
               ))}
 
@@ -314,17 +367,20 @@ export default function BoxingApp() {
               )}
             </AnimatePresence>
 
+
             {/* Repeat combo button */}
-            <div className="w-full max-w-md flex justify-center">
-              <button
-                onClick={() => {
-                  if (combo.length > 0) speak(`Combo: ${combo.join(", ")}`);
-                }}
-                className="mt-4 px-4 py-2 bg-white/20 rounded-xl hover:bg-white/30 text-sm"
-              >
-                Repeat Combo 🔁
-              </button>
-            </div>
+           {voiceOn && (
+              <div className="w-full max-w-md flex justify-center">
+                <button
+                  onClick={() => {
+                    if (combo.length > 0) speak(`Combo: ${combo.join(", ")}`);
+                  }}
+                  className="mt-4 px-4 py-2 bg-white/20 rounded-xl hover:bg-white/30 text-sm"
+                >
+                  Repeat Combo 🔁
+                </button>
+              </div>
+            )}
           </div>
         )}
 
@@ -334,13 +390,58 @@ export default function BoxingApp() {
                 bg-black/30 p-6 rounded-2xl backdrop-blur-md
                 border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.15)]
                 w-full max-w-3xl mx-auto">
+              <h2 className="text-xl font-bold opacity-90 mb-2">
+                Set your variables for training today!
+              </h2>
+                  {/* INTENSITY SELECTOR */}
+            <div className="flex flex-col items-center gap-3 w-full max-w-lg">
+              <h3 className="text-lg font-semibold opacity-90">
+                Intensity
+              </h3>
+
+              <div className="flex gap-3">
+
+                <button
+                  onClick={() => applyIntensity("light")}
+                  className={`px-4 py-2 rounded-xl text-sm 
+                    ${intensity === "light" ? "bg-green-600" : "bg-green-700/40 hover:bg-green-700/60"}`}
+                >
+                  Light
+                </button>
+
+                <button
+                  onClick={() => applyIntensity("moderate")}
+                  className={`px-4 py-2 rounded-xl text-sm 
+                    ${intensity === "moderate" ? "bg-yellow-600" : "bg-yellow-700/40 hover:bg-yellow-700/60"}`}
+                >
+                  Moderate
+                </button>
+
+                <button
+                  onClick={() => applyIntensity("hard")}
+                  className={`px-4 py-2 rounded-xl text-sm 
+                    ${intensity === "hard" ? "bg-red-600" : "bg-red-700/40 hover:bg-red-700/60"}`}
+                >
+                  Hard
+                </button>
+
+                <button
+                  onClick={() => applyIntensity("beast")}
+                  className={`px-4 py-2 rounded-xl text-sm 
+                    ${intensity === "beast" ? "bg-red-800" : "bg-red-900/40 hover:bg-red-900/60"}`}
+                >
+                  Beast
+                </button>
+
+              </div>
+            </div>
 
             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full max-w-lg md:justify-between text-center md:text-left">
               <div className="font-bold text-lg">Number of Moves:</div>
               <div className="flex gap-4 md:gap-6 text-white justify-center md:justify-start">
                 {[1,2,3,4].map(n => (
                   <label key={n} className="flex items-center gap-2">
-                    <input name="moves" type="radio" checked={moveCount===n} onChange={()=>setMoveCount(n)} />
+                    <input name="moves" type="radio" checked={moveCount===n}  disabled={intensityLocked} onChange={()=>!intensityLocked && setMoveCount(n)} />
                     <span>{n}</span>
                   </label>
                 ))}
@@ -352,7 +453,7 @@ export default function BoxingApp() {
               <div className="flex gap-4 md:gap-6 text-white justify-center md:justify-start">
                 {[30,60,90,120].map(d => (
                   <label key={d} className="flex items-center gap-2">
-                    <input name="duration" type="radio" checked={roundDuration===d} onChange={()=>setRoundDuration(d)} />
+                    <input name="duration" type="radio" checked={roundDuration===d} disabled={intensityLocked} onChange={()=>!intensityLocked && setRoundDuration(d)} />
                     <span>{d}s</span>
                   </label>
                 ))}
@@ -364,7 +465,7 @@ export default function BoxingApp() {
               <div className="flex gap-4 md:gap-6 text-white justify-center md:justify-start">
                 {[2,3,4,5].map(r => (
                   <label key={r} className="flex items-center gap-2">
-                    <input name="rounds" type="radio" checked={sessionRounds===r} onChange={()=>setSessionRounds(r)} />
+                    <input name="rounds" type="radio" checked={sessionRounds===r}  disabled={intensityLocked} onChange={()=>!intensityLocked && setSessionRounds(r)} />
                     <span>{r}</span>
                   </label>
                 ))}
