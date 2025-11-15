@@ -288,7 +288,7 @@ export default function BoxingApp() {
   return (
     <div
       className="min-h-screen w-full bg-cover bg-center bg-no-repeat text-white overflow-y-auto md:overflow-y-hidden"
-      style={{ backgroundImage: "url('/boxer.jpg')" }}
+      style={{ backgroundImage: "url('/boxer-cg.jpg')" }}
     >
 
       <div className="w-full min-h-screen flex flex-col justify-between p-4 md:p-6 backdrop-brightness-50">
