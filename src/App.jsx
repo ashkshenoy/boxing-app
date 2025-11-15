@@ -371,9 +371,9 @@ export default function BoxingApp() {
           )}
 
           {currentRound > 0 && sessionRounds > 0 && (
-            <div className="text-xl font-bold mb-3 drop-shadow">
-              Round {currentRound}/{sessionRounds}
-            </div>
+           <div className="text-2xl md:text-3xl font-bold mb-4 drop-shadow opacity-90 tracking-wide">
+            Round {currentRound}/{sessionRounds}
+          </div>
           )}
 
           {preCountdown > 0 && (
@@ -397,7 +397,7 @@ export default function BoxingApp() {
 
         {roundActive && (
           <div className="flex flex-col items-center gap-6 mb-16
-                bg-black/30 p-6 rounded-2xl backdrop-blur-md
+                bg-black/30 p-6 rounded-2xl backdrop-blur-md mt-8
                 border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.15)]
                 w-full max-w-3xl mx-auto">
 
@@ -425,7 +425,7 @@ export default function BoxingApp() {
                   </div>
                 </motion.div>
               ))}
-
+            <div className="flex flex-col mt-6 items-center gap-2 opacity-80 text-center text-base md:text-lg"></div>
               {history.length > 0 && (
                 <div className="flex flex-col mt-4 items-center gap-2 opacity-80 text-center text-base md:text-lg">
                   {history.map((h, i) => (
@@ -642,25 +642,41 @@ export default function BoxingApp() {
             </div>
 
 
-            <button
-              onClick={startSession}
-              className="px-6 py-3 w-full md:w-auto bg-red-600 rounded-2xl text-xl shadow-md hover:bg-red-700 text-center">
-              Start Session
-            </button>
+            <div className="w-full flex flex-col md:flex-row md:justify-center md:items-center gap-4 mt-6">
+              <button
+                onClick={startSession}
+                className="px-6 py-3 bg-red-600 rounded-2xl text-xl shadow-md hover:bg-red-700 text-center md:min-w-[180px]"
+              >
+                Start Training
+              </button>
 
-            <button
-              onClick={() => setShowMainExitModal(true)}
-              className="px-6 py-3 w-full md:w-auto bg-gray-600 rounded-2xl text-xl shadow-md hover:bg-gray-700 text-center">
-              End Training
-            </button>
+              <button
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  setShowMainExitModal(true);
+                }}
+                className="px-6 py-3 bg-gray-600 rounded-2xl text-xl shadow-md hover:bg-gray-700 text-center md:min-w-[180px]"
+              >
+                End Training
+              </button>
+            </div>
 
           </div>
         )}
 
         {(roundActive || restActive) && (
           <button
-            onClick={() => setShowEarlyModal(true)}
-            className="mx-auto mb-6 px-4 py-2 bg-gray-700 rounded-xl hover:bg-gray-600 text-sm">
+            
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setShowEarlyModal(true);}}
+            className="mx-auto mt-6 mb-10 px-6 py-3 
+                      bg-white/10 hover:bg-white/20 
+                      backdrop-blur-md
+                      border border-white/10 
+                      rounded-2xl text-base font-medium
+                      transition-all duration-200"
+          >
             End Session Early
           </button>
         )}
