@@ -391,7 +391,7 @@ export default function BoxingApp() {
                 border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.15)]
                 w-full max-w-3xl mx-auto">
               <h2 className="text-xl font-bold opacity-90 mb-2">
-                Set your variables for training today!
+                Set your variables for training.
               </h2>
                   {/* INTENSITY SELECTOR */}
             <div className="flex flex-col items-center gap-3 w-full max-w-lg">
