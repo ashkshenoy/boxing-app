@@ -461,8 +461,8 @@ export default function BoxingApp() {
             border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.15)]
             w-full max-w-3xl mx-auto">
              
-              <h2 className="text-xl font-bold opacity-90 mb-2">
-                🎯Select an intensity preset or customize your training.
+              <h2 className="text-xl font-bold opacity-90 mb-2 text-center mx-auto">
+                🎯 Select an intensity preset or customize your training.
               </h2>
                   {/* INTENSITY SELECTOR */}
             <div className="flex flex-col items-center gap-3 w-full max-w-lg">
@@ -506,12 +506,22 @@ export default function BoxingApp() {
 
               </div>
               {intensity && (
-                <p className="text-xs opacity-60 mt-1">
-                  {intensity === "light" && "Easy pace — focus on technique."}
-                  {intensity === "moderate" && "Balanced session — stay sharp."}
-                  {intensity === "hard" && "Push your limits — dig deep."}
-                  {intensity === "beast" && "Beast mode — all out!"}
-                </p>
+                <>
+                  <p className="text-xs opacity-60 mt-1">
+                    {intensity === "light" && "Easy pace — focus on technique."}
+                    {intensity === "moderate" && "Balanced session — stay sharp."}
+                    {intensity === "hard" && "Push your limits — dig deep."}
+                    {intensity === "beast" && "Beast mode — all out!"}
+                  </p>
+
+                  {/* Switch back to custom mode */}
+                  <button
+                    onClick={() => setIntensity(null)}
+                    className="text-xs mt-2 px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 opacity-80"
+                  >
+                    Switch to Custom Mode
+                  </button>
+                </>
               )}
             </div>
             <div className="flex items-center gap-3 my-4 w-full max-w-lg">
