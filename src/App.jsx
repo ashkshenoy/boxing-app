@@ -9,12 +9,82 @@ const MOVES = [
 ];
 
 const TIPS = [
+  // Core boxing fundamentals
   "Keep your guard up.",
   "Exhale when you punch.",
   "Rotate your hips for power.",
   "Stay light on your toes.",
-  "Don’t drop the non-punching hand."
+  "Don’t drop the non-punching hand.",
+
+  // Stance & posture
+  "Keep your chin tucked and eyes forward.",
+  "Bend your knees slightly — never lock them.",
+  "Relax your shoulders; tension slows punches.",
+  "Elbows stay tight to your ribs.",
+  "Keep your rear heel slightly lifted for mobility.",
+  "Don't lean forward — stay centered.",
+  "Stay compact and make yourself a small target.",
+
+  // Weight distribution
+  "Keep about 55% of your weight on your back foot.",
+  "Transfer weight smoothly, not abruptly.",
+  "Power starts from your legs, not your arms.",
+  "Shift forward on the jab, back when defending.",
+  "Rotate your hips on every power punch.",
+  "Don't lunge — step in with control.",
+  "Use your legs to dip for uppercuts, not your waist.",
+
+  // Footwork & movement
+  "Move after every combination — never stay still.",
+  "Small steps keep balance; avoid big steps.",
+  "Don’t cross your feet when moving.",
+  "Pivot your lead foot when throwing hooks.",
+  "Stay light — imagine standing on hot sand.",
+  "Step back instead of leaning back.",
+  "Circle with your lead foot first.",
+  "Keep your stance width balanced — not too narrow or wide.",
+  "Return to center position after slipping.",
+
+  // Punching mechanics
+  "Punch straight back to guard after each strike.",
+  "Snap the jab — don’t push it.",
+  "Turn your knuckles over on straight punches.",
+  "Hooks come from the hip, not the arm.",
+  "Don’t overextend your cross — keep balance.",
+  "Uppercuts rise with your legs and hips.",
+  "Aim punches to where the target will be, not where it was.",
+
+  // Defense & awareness
+  "Hands return to guard immediately — don’t admire your work.",
+  "Slip before punching, not after.",
+  "See the punch from the shoulders, not the gloves.",
+  "Block with forearms, not your face.",
+  "Step offline to avoid straight punches.",
+  "Defense creates openings for offense.",
+
+  // Fight IQ & rhythm
+  "Use your jab to measure distance.",
+  "Change rhythm to stay unpredictable.",
+  "Mix head and body shots to break the guard.",
+  "Slow is smooth; smooth is fast.",
+  "The punch you don’t see is the one that hurts.",
+  "Think “hit and don’t get hit.”",
+  "Read your opponent’s chest, not their hands.",
+
+  // Conditioning & flow
+  "Control your breathing — it saves energy.",
+  "Relax between punches to maintain speed.",
+  "Stay loose — tension wastes stamina.",
+  "Flow with your movement; don’t fight against it.",
+
+  // Motivational cues
+  "Stay sharp — every punch has purpose.",
+  "Trust your technique — don’t force power.",
+  "One clean punch beats five wild ones.",
+  "Box smart, not hard.",
+  "Stay composed — champions are calm under pressure."
 ];
+
 
 const MOVE_COLORS = {
   Jab: "text-blue-300",
@@ -288,7 +358,7 @@ export default function BoxingApp() {
   return (
     <div
       className="min-h-screen w-full bg-cover bg-center bg-no-repeat text-white overflow-y-auto md:overflow-y-hidden"
-      style={{ backgroundImage: "url('/boxer-cg.png')" }}
+      style={{ backgroundImage: "url('/boxing-bag.png')" }}
     >
 
       <div className="w-full min-h-screen flex flex-col justify-between p-4 md:p-6 backdrop-brightness-50">
@@ -387,16 +457,17 @@ export default function BoxingApp() {
         {/* MAIN SCREEN SETTINGS */}
         {!roundActive && !preCountdown && !restActive && !goodWork && (
           <div className="flex flex-col items-center gap-6 mb-16
-                bg-black/30 p-6 rounded-2xl backdrop-blur-md
-                border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.15)]
-                w-full max-w-3xl mx-auto">
+            bg-black/30 p-6 rounded-2xl backdrop-blur-md
+            border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.15)]
+            w-full max-w-3xl mx-auto">
+             
               <h2 className="text-xl font-bold opacity-90 mb-2">
-                Set your variables for training.
+                🎯Select an intensity preset or customize your training.
               </h2>
                   {/* INTENSITY SELECTOR */}
             <div className="flex flex-col items-center gap-3 w-full max-w-lg">
               <h3 className="text-lg font-semibold opacity-90">
-                Intensity
+                🔥Intensity Presets
               </h3>
 
               <div className="flex gap-3">
@@ -434,8 +505,20 @@ export default function BoxingApp() {
                 </button>
 
               </div>
+              {intensity && (
+                <p className="text-xs opacity-60 mt-1">
+                  {intensity === "light" && "Easy pace — focus on technique."}
+                  {intensity === "moderate" && "Balanced session — stay sharp."}
+                  {intensity === "hard" && "Push your limits — dig deep."}
+                  {intensity === "beast" && "Beast mode — all out!"}
+                </p>
+              )}
             </div>
-
+            <div className="flex items-center gap-3 my-4 w-full max-w-lg">
+            <div className="flex-1 h-[1px] bg-white/15 rounded-full"></div>
+            <span className="text-sm opacity-80">OR</span>
+            <div className="flex-1 h-[1px] bg-white/15 rounded-full"></div>
+          </div>
             <div className="flex flex-col md:flex-row items-center gap-3 md:gap-4 w-full max-w-lg md:justify-between text-center md:text-left">
               <div className="font-bold text-lg">Number of Moves:</div>
               <div className="flex gap-4 md:gap-6 text-white justify-center md:justify-start">
@@ -474,74 +557,79 @@ export default function BoxingApp() {
 
             {/* Voice + Sound settings */}
             {/* SOUND + VOICE TOGGLES */}
-<div className="flex flex-col gap-3 w-full max-w-xs">
+            <div className="flex items-center gap-3 my-4 w-full max-w-lg">
+              <div className="flex-1 h-[2px] bg-white/40 rounded-full"></div>
+              <span className="text-sm opacity-80">AUDIO SETTINGS </span>
+              <div className="flex-1 h-[2px] bg-white/40 rounded-full"></div>
+            </div>
+            <div className="flex flex-col gap-3 w-full max-w-xs">
 
-  {/* Sound toggle */}
-  <label className="flex items-center justify-between">
-    <span className="font-semibold">Sound</span>
-    <input
-      type="checkbox"
-      checked={soundOn}
-      onChange={() => setSoundOn(!soundOn)}
-    />
-  </label>
+              {/* Sound toggle */}
+              <label className="flex items-center justify-between">
+                <span className="font-semibold">Sound</span>
+                <input
+                  type="checkbox"
+                  checked={soundOn}
+                  onChange={() => setSoundOn(!soundOn)}
+                />
+              </label>
 
-  {/* Voice toggle */}
-  <label className="flex items-center justify-between">
-    <span className="font-semibold">Voice</span>
-    <input
-      type="checkbox"
-      checked={voiceOn}
-      onChange={() => setVoiceOn(!voiceOn)}
-    />
-  </label>
+              {/* Voice toggle */}
+              <label className="flex items-center justify-between">
+                <span className="font-semibold">Voice</span>
+                <input
+                  type="checkbox"
+                  checked={voiceOn}
+                  onChange={() => setVoiceOn(!voiceOn)}
+                />
+              </label>
 
-  {/* --- CONDITIONAL VOICE SETTINGS --- */}
-  {voiceOn && (
-    <div className="mt-2 p-3 bg-black/20 rounded-xl text-xs flex flex-col gap-3 border border-white/10">
+              {/* --- CONDITIONAL VOICE SETTINGS --- */}
+              {voiceOn && (
+                <div className="mt-2 p-3 bg-black/20 rounded-xl text-xs flex flex-col gap-3 border border-white/10">
 
-      <div className="text-center font-semibold text-sm opacity-80">
-        Voice Settings
-      </div>
+                  <div className="text-center font-semibold text-sm opacity-80">
+                    Voice Settings
+                  </div>
 
-      {/* Gender */}
-      <label className="flex justify-between">
-        <span>Female</span>
-        <input
-          type="radio"
-          name="voice-gender"
-          checked={voiceGender === "female"}
-          onChange={() => setVoiceGender("female")}
-        />
-      </label>
+                  {/* Gender */}
+                  <label className="flex justify-between">
+                    <span>Female</span>
+                    <input
+                      type="radio"
+                      name="voice-gender"
+                      checked={voiceGender === "female"}
+                      onChange={() => setVoiceGender("female")}
+                    />
+                  </label>
 
-      <label className="flex justify-between">
-        <span>Male</span>
-        <input
-          type="radio"
-          name="voice-gender"
-          checked={voiceGender === "male"}
-          onChange={() => setVoiceGender("male")}
-        />
-      </label>
+                  <label className="flex justify-between">
+                    <span>Male</span>
+                    <input
+                      type="radio"
+                      name="voice-gender"
+                      checked={voiceGender === "male"}
+                      onChange={() => setVoiceGender("male")}
+                    />
+                  </label>
 
-      {/* Volume slider */}
-      <div className="flex flex-col mt-1">
-        <span className="opacity-70 mb-1">Volume: {Math.round(voiceVolume * 100)}%</span>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step="0.05"
-          value={voiceVolume}
-          onChange={(e) => setVoiceVolume(parseFloat(e.target.value))}
-          className="w-full"
-        />
-      </div>
-    </div>
-  )}
+                  {/* Volume slider */}
+                  <div className="flex flex-col mt-1">
+                    <span className="opacity-70 mb-1">Volume: {Math.round(voiceVolume * 100)}%</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      value={voiceVolume}
+                      onChange={(e) => setVoiceVolume(parseFloat(e.target.value))}
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+              )}
 
-</div>
+            </div>
 
 
             <button
