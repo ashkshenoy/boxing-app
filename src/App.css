@@ -41,3 +41,24 @@ html, body, #root {
 .read-the-docs {
   color: #888;
 }
+.dark {
+  color: white;
+  background-color: #0b0b0d;
+}
+
+.light {
+  color: #111;
+  background-color: #f4f4f4;
+}
+
+.neon {
+  color: #EAEAFF;
+  background: radial-gradient(circle at top, #12003b, #000);
+}
+
+.neon .rounded-2xl,
+.neon .rounded-xl {
+  border: 1px solid rgba(255,0,200,0.4) !important;
+  box-shadow: 0 0 10px rgba(255,0,200,0.25) !important;
+}
+
