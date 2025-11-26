@@ -195,6 +195,7 @@ export default function BoxingApp() {
   const [nextComboAt, setNextComboAt] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [showAppName, setShowAppName] = useState(false);
+  const [showInfoPage, setShowInfoPage] = useState(false);
   const COMBO_INTERVALS = {
     slow: 15,
     normal: 10,
@@ -484,6 +485,20 @@ export default function BoxingApp() {
     }
 
   }, [currentTrackIndex]);
+  const InfoCard = ({ title, children }) => {
+    const themeClasses = {
+      dark: "bg-white/10 text-white border-white/10",
+      light: "bg-white/60 text-black border-black/20 shadow-lg",
+      neon: "bg-white/10 text-white border-pink-500/40 shadow-[0_0_15px_rgba(255,0,255,0.4)]",
+    };
+
+    return (
+      <div className={`p-5 rounded-2xl mb-6 backdrop-blur-lg ${themeClasses[theme]}`}>
+        {title && <h2 className="text-3xl font-bold mb-3">{title}</h2>}
+        {children}
+      </div>
+    );
+  };
 
   return (
     <div
@@ -553,7 +568,7 @@ export default function BoxingApp() {
 
         {/* ===== SLIDE-IN SETTINGS DRAWER ===== */}
         <AnimatePresence>
-          {showSettings && (
+          {showSettings && !showInfoPage && (
             <>
               {/* BACKDROP */}
               <motion.div
@@ -679,6 +694,24 @@ export default function BoxingApp() {
 
                     <span className="text-xs mt-1 opacity-80">Music</span>
                   </div>
+                  {/* INFO BUTTON */}
+
+                  <div className="flex flex-col items-center">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowInfoPage(prev => !prev);
+
+                      }}
+                      className={`px-3 py-2 rounded-xl backdrop-blur-md border text-lg
+                        ${showInfoPage ? activeBtn : inactiveBtn}`}
+                    >
+                      ℹ️
+                    </button>
+                    <span className="text-xs mt-1 opacity-80">Info</span>
+                  </div>
+
+
 
                 </div>
 
@@ -1039,6 +1072,12 @@ export default function BoxingApp() {
                   </button>
                 </div>
               )}
+
+
+
+
+
+
             </div>
           )}
 
@@ -1302,6 +1341,217 @@ export default function BoxingApp() {
             </motion.div>
           )}
         </AnimatePresence>
+        {/* INFO FULL PAGE */}
+        {/* INFO FULL PAGE – CARD SECTIONS */}
+        <AnimatePresence>
+          {showInfoPage && (
+            <motion.div
+              className={`
+    fixed inset-0 z-[2000]       
+    p-6 flex flex-col overflow-y-auto backdrop-blur-xl
+
+    ${theme === "dark" ? "bg-black/80 text-white" : ""}
+    ${theme === "light" ? "bg-white/60 text-black" : ""}
+    ${theme === "neon" ? "bg-black/80 text-white" : ""}
+  `}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              {/* CLOSE BUTTON BAR */}
+              <div className="flex justify-end mb-4">
+                <button
+                  onClick={() => setShowInfoPage(false)}
+                  className="text-3xl opacity-70 hover:opacity-100"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* CONTENT SCROLL AREA */}
+              <div className="flex-1 overflow-y-auto pr-2">
+                <div className="max-w-3xl mx-auto space-y-6">
+
+                  {/* INTRO CARD */}
+                  <InfoCard title="🥊 Introduction to Boxing">
+                    <p className="opacity-90 leading-relaxed mb-4">
+                      Boxing is a combat sport built on timing, accuracy, footwork, and defensive awareness.
+                      It develops full-body coordination, sharp reflexes, cardiovascular endurance,
+                      and mental focus. Even without contact, boxing training improves
+                      power, rhythm, balance, and discipline.
+                    </p>
+                  </InfoCard>
+
+
+                  {/* TYPES OF BOXING */}
+                  <InfoCard title="📚 Types of Boxing">
+                    <ul className="space-y-2 opacity-90 leading-relaxed">
+                      <li><b>• Traditional Boxing:</b> Classic jab–cross–hook–uppercut style focused on hands, movement, and defense.</li>
+                      <li><b>• Kickboxing:</b> Uses punches + kicks, great for cardio and explosive conditioning.</li>
+                      <li><b>• Muay Thai:</b> “Art of 8 Limbs” — fists, elbows, knees, shins.</li>
+                      <li><b>• Fitness Boxing:</b> Technique + fast-paced cardio, usually non-contact.</li>
+                      <li><b>• Shadow Boxing:</b> Solo technique work focusing on form, timing, and footwork.</li>
+                    </ul>
+                  </InfoCard>
+
+
+
+
+                  {/* FUNDAMENTALS */}
+                  <InfoCard title="⚖️ Stance & Fundamentals">
+
+                    {/* Base */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Your Base (Stance)</h3>
+                    <ul className="space-y-2 opacity-90 leading-relaxed">
+                      <li>• Feet shoulder-width apart, lead foot pointing forward, rear foot angled.</li>
+                      <li>• Keep center of gravity balanced between both feet.</li>
+                      <li>• Chin tucked behind lead shoulder; eyes forward.</li>
+                      <li>• Lead hand slightly extended, rear hand protecting jaw.</li>
+                      <li>• Elbows tight to ribs to protect the body.</li>
+                    </ul>
+
+                    {/* Movement */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Balance & Movement</h3>
+                    <ul className="space-y-2 opacity-90 leading-relaxed">
+                      <li>• Move the foot in the direction first → then let the other follow.</li>
+                      <li>• Small steps help maintain stance and stability.</li>
+                      <li>• Never cross your feet — it exposes you and kills balance.</li>
+                      <li>• Always return to stance after every movement.</li>
+                    </ul>
+
+                    {/* Weight */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Weight Distribution</h3>
+                    <ul className="space-y-2 opacity-90 leading-relaxed">
+                      <li>• Keep ~55% of weight on rear foot, 45% on lead foot.</li>
+                      <li>• Shift forward slightly when jabbing, backward when defending.</li>
+                      <li>• Power comes from your legs and hips, not your arms.</li>
+                      <li>• Rotate hips smoothly when punching — never force it.</li>
+                    </ul>
+
+                    {/* Breathing */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Breathing & Rhythm</h3>
+                    <ul className="space-y-2 opacity-90 leading-relaxed">
+                      <li>• Exhale sharply (“tss”) with every punch.</li>
+                      <li>• Maintain steady breathing between combos.</li>
+                      <li>• Stay loose — tension slows you down and drains energy.</li>
+                      <li>• Keep a subtle rhythm in your legs to stay active and ready.</li>
+                    </ul>
+
+                  </InfoCard>
+
+
+                  {/* OFFENSIVE */}
+                  <InfoCard title="🥊 Offensive Techniques">
+
+                    {/* Jab */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Jab</h3>
+                    <p className="opacity-90 leading-relaxed mb-3">
+                      The fastest punch. Snaps out with the lead hand and retracts immediately.
+                      Used for range control, timing, setups, scoring, and breaking guard rhythm.
+                    </p>
+
+                    {/* Cross */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Cross</h3>
+                    <p className="opacity-90 leading-relaxed mb-3">
+                      Straight rear-hand power punch. Driven by hip rotation and rear-foot pivot.
+                      Must stay balanced — don’t overextend.
+                    </p>
+
+                    {/* Hooks */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Hooks</h3>
+                    <p className="opacity-90 leading-relaxed mb-3">
+                      Semi-circular punches. Lead hook uses lead-foot pivot; rear hook rotates hips hard.
+                      Keep elbow at 90° — wide hooks expose you.
+                    </p>
+
+                    {/* Uppercuts */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Uppercuts</h3>
+                    <p className="opacity-90 leading-relaxed mb-3">
+                      Rising punches using legs + hips. Slight knee dip (not waist bend).
+                      Targets chin or body. Maintain posture and guard.
+                    </p>
+
+                    {/* Combo Flow */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Combination Flow</h3>
+                    <p className="opacity-90 leading-relaxed">
+                      Mix levels (head → body → head). Keep punches sharp, relax between shots,
+                      and always return to guard. Rhythm beats brute force.
+                    </p>
+
+                  </InfoCard>
+
+
+                  {/* DEFENSIVE */}
+                  <InfoCard title="🛡️ Defensive Techniques">
+
+                    {/* Slip */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Slip Left / Right</h3>
+                    <p className="opacity-90 leading-relaxed mb-3">
+                      Move the head just off the center line to evade straight punches.
+                      Use small torso rotation. Stay close enough to counter.
+                    </p>
+
+                    {/* Step Back */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Step Back</h3>
+                    <p className="opacity-90 leading-relaxed mb-3">
+                      Quick controlled half-step backward. Creates instant space without losing stance.
+                      Works well against aggressive jabs and crosses.
+                    </p>
+
+                    {/* Block */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Block</h3>
+                    <p className="opacity-90 leading-relaxed mb-3">
+                      Use gloves and forearms to absorb strikes. Keep elbows tight, wrists firm,
+                      and eyes forward to counter immediately.
+                    </p>
+
+                    {/* Roll */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Roll</h3>
+                    <p className="opacity-90 leading-relaxed mb-3">
+                      Bend knees and rotate torso under hooks. Return with a counter while rising —
+                      perfect for body shots and hooks.
+                    </p>
+
+                    {/* Pivot */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Pivot</h3>
+                    <p className="opacity-90 leading-relaxed mb-3">
+                      Rotate lead foot and hips to instantly change angle. Escapes pressure and
+                      creates new offensive openings.
+                    </p>
+
+                    {/* Parry */}
+                    <h3 className="text-xl font-semibold mt-4 mb-2">Parry</h3>
+                    <p className="opacity-90 leading-relaxed">
+                      Redirect incoming punches with a quick glove tap.
+                      Opens clean counter opportunities while saving energy.
+                    </p>
+
+                  </InfoCard>
+
+
+                  {/* APP USAGE */}
+                  <InfoCard title="📱 How to Use The Boxing App">
+                    <ul className="space-y-3 opacity-90 leading-relaxed">
+                      <li><b>• Choose Intensity:</b> Select Light → Beast presets or customize moves, duration, and rounds.</li>
+                      <li><b>• Start Training:</b> Timed rounds begin with auto-generated combos and countdown.</li>
+                      <li><b>• Combo Cards:</b> See punch names + descriptions for quick understanding.</li>
+                      <li><b>• Enable Voice:</b> Hear combos announced every interval.</li>
+                      <li><b>• Use Music:</b> Play background tracks and adjust volume.</li>
+                      <li><b>• Rest Periods:</b> Automatic 15s rest timers between rounds.</li>
+                      <li><b>• Review History:</b> Last 3 combos shown for recap and practice.</li>
+                      <li><b>• End Anytime:</b> Use early exit or finish full session.</li>
+                    </ul>
+                  </InfoCard>
+
+
+
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+
 
       </div>
       <style>
