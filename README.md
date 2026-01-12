@@ -1,16 +1,29 @@
-# React + Vite
+# RootX Boxing Coach
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A focused boxing timer built for effective solo training.  
+Create preset intensity rounds or custom sessions and stay locked in.
 
-Currently, two official plugins are available:
+## Features
+- Preset boxing round timers
+- Custom round and rest durations
+- Clean, distraction-free UI
+- Optimized for solo training sessions
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- React
+- Tailwind CSS
 
-## React Compiler
+## Scope
+- Frontend-only application
+- No backend or persistence
+- State managed locally in the client
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting Started
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+<img width="1919" height="868" alt="image" src="https://github.com/user-attachments/assets/63d2ff56-9827-4208-a7a5-fd067b52f97b" />
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+<img width="1901" height="866" alt="image" src="https://github.com/user-attachments/assets/4dc87228-d166-4af3-8c61-f22143f952de" />
