@@ -24,6 +24,8 @@ Features like themes, sound, voice assist and info included
 npm install
 npm run dev
 ```
+## Working link
+https://minimal-boxing-app.netlify.app/
 
 <img width="1919" height="868" alt="image" src="https://github.com/user-attachments/assets/63d2ff56-9827-4208-a7a5-fd067b52f97b" />
 
