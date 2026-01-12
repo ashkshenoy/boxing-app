@@ -2,6 +2,7 @@
 
 A focused boxing timer built for effective solo training.  
 Create preset intensity rounds or custom sessions and stay locked in.
+Features like themes, sound, voice assist and info included
 
 ## Features
 - Preset boxing round timers
